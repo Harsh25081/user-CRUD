@@ -1,0 +1,46 @@
+body{
+    background:url("https://w0.peakpx.com/wallpaper/664/707/HD-wallpaper-passenger-plane-sunset-tropical-island-ocean-air-travel-concepts-orange-sky.jpg")no-repeat;
+    background-size: cover;
+}
+
+.form{
+    border:2px solid white;
+    border-radius: 10px;
+    display : flex;
+    flex-direction: column;
+    width: 35%;
+    height: 400px;
+    margin: auto;
+}
+
+.form input{
+    margin:2%;
+    padding: 1%;
+    background-color: aqua;
+    color: blue;
+    border : none;
+    border-bottom: 2px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.form button{
+    width: 50%;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.form div label{
+    padding: 1.5%;
+    margin-left: 10px;
+    border-radius: 10px;
+    background-color: aqua;
+    color:blue
+}
+
+.form button:hover{
+    background-color: rgb(172, 82, 247);
+    border: 1.5px solid blue;
+    color: aquamarine;
+    border-radius: 10px;
+}

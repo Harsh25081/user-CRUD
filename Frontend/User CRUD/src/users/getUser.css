@@ -1,0 +1,31 @@
+.container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    text-align: center;
+}
+
+.outer{
+    border: 2px solid white;
+    width:100%
+}
+
+.outer img{
+    height: 40%;
+    width: 30%;
+    border-radius: 50%;
+}
+
+.outer button{
+    margin: 5px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+}
+
+.outer #delete:hover{
+    background-color: rgb(242, 48, 48);
+}
+
+.outer #edit:hover{
+    background-color: rgb(49, 230, 170);
+}
