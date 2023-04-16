@@ -71,7 +71,7 @@ exports.updateUser = async (req, res) => {
         let data = req.body
         let userId = req.params.userId
         let files = req.files
-        if (files) {
+        if (files.length!=0) {
             data.profilepic = await createS3link(files)
         }
         let updateUser = await userModel.findByIdAndUpdate(userId, { $set: data }, { new: true })

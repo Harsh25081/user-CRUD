@@ -49,7 +49,7 @@ function GetUser() {
                 let { fname, lname, age, gender, email, profilepic, _id } = user
                 return (
                     <div key={index} className='outer'>
-                        <img src={`${profilepic}`}></img>
+                        <img alt='index' src={`${profilepic}`}></img>
                         <p>{fname} {lname}</p>
                         <p>{age}</p>
                         <p>{gender}</p>
