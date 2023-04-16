@@ -33,7 +33,6 @@ function GetUser() {
         axios.delete(`http://localhost:3001/deleteuser/${_id}`)
             .then((res) => { console.log(res.data) })
             .catch((err) => console.log(err.message))
-            getAllUsers()
     }
 
 
