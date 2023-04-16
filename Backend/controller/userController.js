@@ -2,41 +2,41 @@ const userModel = require("../model/userModel")
 const aws = require("aws-sdk")
 
 
-    aws.config.update({
-        accessKeyId: "AKIAY3L35MCRZNIRGT6N",
-        secretAccessKey: "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",
-        region: "ap-south-1"
-    })
+aws.config.update({
+    accessKeyId: "AKIAY3L35MCRZNIRGT6N",
+    secretAccessKey: "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",
+    region: "ap-south-1"
+})
 
-    let uploadFile = async (file) => {
-        return new Promise(function (resolve, reject) {
-            // this function will upload file to aws and return the link
-            let s3 = new aws.S3({ apiVersion: '2006-03-01' }); // we will be using the s3 service of aws
-    
-            var uploadParams = {
-                ACL: "public-read",
-                Bucket: "classroom-training-bucket",
-                Key: "abc/" + file.originalname,
-                Body: file.buffer
+let uploadFile = async (file) => {
+    return new Promise(function (resolve, reject) {
+        // this function will upload file to aws and return the link
+        let s3 = new aws.S3({ apiVersion: '2006-03-01' }); // we will be using the s3 service of aws
+
+        var uploadParams = {
+            ACL: "public-read",
+            Bucket: "classroom-training-bucket",
+            Key: "abc/" + file.originalname,
+            Body: file.buffer
+        }
+
+        s3.upload(uploadParams, function (err, data) {
+            if (err) {
+                return reject({ "error": err })
             }
-    
-            s3.upload(uploadParams, function (err, data) {
-                if (err) {
-                    return reject({ "error": err })
-                }
-                console.log("file uploaded succesfully")
-                return resolve(data.Location)
-            })
-    
+            console.log("file uploaded succesfully")
+            return resolve(data.Location)
         })
-    }
+
+    })
+}
 
 
 exports.createUser = async (req, res) => {
     try {
         let data = req.body
         let files = req.files
-        if (files.length!=0) {
+        if (files.length != 0) {
             data.profilepic = await uploadFile(files[0])
         }
         if (Object.keys(data).length == 0) return res.status(400).send({ staus: false, message: "Pls provide data" })
@@ -71,7 +71,7 @@ exports.updateUser = async (req, res) => {
         let data = req.body
         let userId = req.params.userId
         let files = req.files
-        if (files) {
+        if (files.length != 0) {
             data.profilepic = await createS3link(files)
         }
         let updateUser = await userModel.findByIdAndUpdate(userId, { $set: data }, { new: true })

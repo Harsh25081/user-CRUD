@@ -1,34 +1,43 @@
-import React, { useState } from 'react'
+import React, { useReducer } from 'react'
 import axios from 'axios'
 import './createUser.css'
+import UserForm from './userForm'
 
-export default function CreateUser() {
-  const [data, setData] = useState({
+let getInitialState = {
+  user: {
     fname: "",
     lname: "",
     age: 0,
     gender: "",
     email: "",
     files: null
-  })
-
-  // const [state,dispatch] = useReducer(usersReducer,getInitialState)
-  // const {fname , lname , age , gender , email , files} = state.user
-
-  const HandleChange = (event) => {
-    let { name, value } = event.target
-    setData({ ...data, [name]: value })
   }
+}
 
-  const HandleSubmit = (event) => {
-    event.preventDefault();
+function usersReducer(state, action) {
+  console.log({ state, action })
+  return { user: action.payload }
+}
+
+export default function CreateUser() {
+
+  const [state, dispatch] = useReducer(usersReducer, getInitialState)
+  const { fname, lname, age, gender, email, files } = state.user
+
+
+  const HandleSubmit = (user) => {
+    console.log("Dispatching payload....")
+    dispatch({
+      type: "create-user",
+      payload: user
+    })
     let formdata = new FormData()
-    formdata.append("fname", data.fname)
-    formdata.append("lname", data.lname)
-    formdata.append("age", data.age)
-    formdata.append("gender", data.gender)
-    formdata.append("email", data.email)
-    formdata.append("files", data.files)
+    formdata.append("fname", fname)
+    formdata.append("lname", lname)
+    formdata.append("age", age)
+    formdata.append("gender", gender)
+    formdata.append("email", email)
+    formdata.append("files", files)
     axios.post("http://localhost:3001/createuser", formdata, { headers: { "content-type": "multipart/form-data" } })
       .then((response) => { console.log("response", response) })
       .catch((err) => { console.log(err.message) })
@@ -37,19 +46,7 @@ export default function CreateUser() {
   return (
     <div>
       <div>
-        <form className="form" onSubmit={HandleSubmit}>
-          <input type='text' name='fname' placeholder='Fname' onChange={HandleChange}></input>
-          <input type='text' name='lname' placeholder='Lname' onChange={HandleChange}></input>
-          <input type='Number' name='age' placeholder='Age' onChange={HandleChange}></input>
-          {/* <input type='radio' value="male"></input> */}
-          <input type='text' name='gender' placeholder='Gender' onChange={HandleChange}></input>
-          <input type='email' name='email' placeholder='email' onChange={HandleChange}></input>
-          <div>
-            <label>ProfilePic</label>
-            <input type='file' name='profilepic' onChange={(e) => { setData({ ...data, files: e.target.files[0] }); console.log(e.target.files[0]) }}></input>
-          </div>
-          <button >Submit</button>
-        </form>
+        <UserForm onSubmit={HandleSubmit} />
       </div>
     </div>
   )
